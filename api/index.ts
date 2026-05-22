@@ -141,14 +141,37 @@ app.get("/api/all-anime", async (req, res) => {
 
   try {
 
-    const resp = await client.get(`/az-list?page=${page}`);
+    const urls = [
+      `/filter?page=${page}`,
+      `/az-list?page=${page}`,
+      `/anime?page=${page}`
+    ];
 
-    const results = extractAnimeList(resp.data);
+    let results = [];
+
+    for (const url of urls) {
+
+      const resp = await client.get(url);
+
+      results = extractAnimeList(resp.data);
+
+      if (results.length > 0) {
+
+        return res.json({
+          success: true,
+          source: url,
+          page,
+          data: results
+        });
+
+      }
+
+    }
 
     res.json({
       success: true,
       page,
-      data: results
+      data: []
     });
 
   } catch (e) {
