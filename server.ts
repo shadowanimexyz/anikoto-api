@@ -5,21 +5,33 @@ const app = express();
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("API WORKING");
-});
+const animeData = [
+  {
+    title: "Solo Leveling",
+    image: "https://cdn.myanimelist.net/images/anime/1170/124312.jpg",
+    episodes: 12,
+    rating: 9.1
+  },
+  {
+    title: "Attack on Titan",
+    image: "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+    episodes: 87,
+    rating: 9.0
+  }
+];
 
-app.get("/api/most-popular", (req, res) => {
+app.get("/", (req, res) => {
   res.json({
-    results: [
-      {
-        id: "naruto",
-        title: "Naruto",
-        poster: "https://cdn.myanimelist.net/images/anime/13/17405.jpg",
-        episodes: "220"
-      }
-    ]
+    message: "Shadow Anime API Running"
   });
 });
 
-export default app;
+app.get("/api/most-popular", (req, res) => {
+  res.json(animeData);
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
