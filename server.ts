@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import appInstance from "./api/index.ts";
 
 const processCwd = process.cwd();
 
@@ -10,7 +9,6 @@ async function startServer() {
   const PORT = 3000;
 
   // Mount API routes
-  app.use(appInstance);
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
