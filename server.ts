@@ -1,4 +1,11 @@
 import express from "express";
+import cors from "cors";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import appInstance from "./api/index.ts";
