@@ -1,11 +1,5 @@
 import express from "express";
 import cors from "cors";
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import appInstance from "./api/index.ts";
@@ -14,12 +8,13 @@ const processCwd = process.cwd();
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
-  // Mount API routes
+  app.use(cors());
+  app.use(express.json());
+
   app.use(appInstance);
 
-  // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -27,10 +22,10 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.join(processCwd, "dist");
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
     });
   }
 
