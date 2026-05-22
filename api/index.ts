@@ -136,6 +136,29 @@ app.get("/api/latest-episodes", async (req, res) => {
   }
 });
 
+app.get("/api/all-anime", async (req, res) => {
+  const page = req.query.page || 1;
+
+  try {
+    const resp = await client.get(`/az-list/${page}`);
+    const results = extractAnimeList(resp.data);
+
+    res.json({
+      success: true,
+      page,
+      data: results
+    });
+
+  } catch (e) {
+    console.error("All anime error:", e.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to scrape all anime",
+      details: e.message
+    });
+  }
+});
+
 app.get("/api/popular", async (req, res) => {
   try {
     const resp = await client.get("/most-viewed");
