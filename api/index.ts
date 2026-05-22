@@ -125,6 +125,35 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
+app.get("/api/count-test", async (req, res) => {
+  const keywords = ["a","b","c","d","e","f","g","h","i","j"];
+  let all = [];
+
+  for(const key of keywords){
+    try{
+      const resp = await client.get(`/filter`, {
+        params: { keyword: key }
+      });
+
+      const results = extractAnimeList(resp.data);
+      all.push(...results);
+    }catch(e){
+      console.log("Count keyword failed:", key);
+    }
+  }
+
+  const unique = Array.from(
+    new Map(all.map(a => [a.id, a])).values()
+  );
+
+  res.json({
+    success: true,
+    testedKeywords: keywords.length,
+    estimatedTotal: unique.length,
+    data: unique
+  });
+});
+
 app.get("/api/latest-episodes", async (req, res) => {
   try {
     const resp = await client.get("/home");
