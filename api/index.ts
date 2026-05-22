@@ -140,7 +140,9 @@ app.get("/api/all-anime", async (req, res) => {
   const page = req.query.page || 1;
 
   try {
-    const resp = await client.get(`/az-list/${page}`);
+
+    const resp = await client.get(`/az-list?page=${page}`);
+
     const results = extractAnimeList(resp.data);
 
     res.json({
@@ -150,12 +152,15 @@ app.get("/api/all-anime", async (req, res) => {
     });
 
   } catch (e) {
+
     console.error("All anime error:", e.message);
+
     res.status(500).json({
       success: false,
       error: "Failed to scrape all anime",
       details: e.message
     });
+
   }
 });
 
