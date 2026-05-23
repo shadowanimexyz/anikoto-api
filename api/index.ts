@@ -154,6 +154,47 @@ app.get("/api/count-test", async (req, res) => {
   });
 });
 
+app.get("/api/library-count", async (req, res) => {
+
+  const keywords = [
+    "a","b","c","d","e","f","g","h","i","j","k","l","m",
+    "n","o","p","q","r","s","t","u","v","w","x","y","z",
+    "movie","season","anime","ova","special"
+  ];
+
+  let all = [];
+
+  for(const keyword of keywords){
+
+    try{
+
+      const resp = await client.get("/filter", {
+        params: { keyword }
+      });
+
+      const results = extractAnimeList(resp.data);
+
+      all.push(...results);
+
+    }catch(e){
+
+      console.log("Library count failed:", keyword);
+
+    }
+
+  }
+
+  const unique = Array.from(
+    new Map(all.map(a => [a.id, a])).values()
+  );
+
+  res.json({
+    success: true,
+    estimatedTotal: unique.length
+  });
+
+});
+
 app.get("/api/latest-episodes", async (req, res) => {
   try {
     const resp = await client.get("/home");
