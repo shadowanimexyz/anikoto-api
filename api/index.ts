@@ -126,7 +126,52 @@ app.get("/api/search", async (req, res) => {
 });
 
 app.get("/api/count-test", async (req, res) => {
-  const keywords = ["a","b","c","d","e","f","g","h","i","j"];
+ const keywords = [
+
+  // alphabet
+  "a","b","c","d","e","f","g","h","i","j","k","l","m",
+  "n","o","p","q","r","s","t","u","v","w","x","y","z",
+
+  // numbers
+  "0","1","2","3","4","5","6","7","8","9",
+
+  // anime types
+  "anime","tv","movie","ova","ona","special","season",
+
+  // genres
+  "action","romance","fantasy","adventure","comedy",
+  "drama","school","isekai","magic","sports","ecchi",
+  "thriller","psychological","mystery","mecha","sci fi",
+  "slice of life","historical","military","music","horror",
+
+  // common words
+  "world","life","girl","boy","hero","king","queen",
+  "demon","angel","monster","academy","battle","war",
+  "reborn","future","dream","legend","sword","spirit",
+  "online","game","quest","princess","vampire","dark",
+  "light","god","power","system","gate","hunter",
+  "magic","dragon","blade","shadow","moon","star",
+
+  // japanese words
+  "isekai","tensei","shounen","shoujo","senpai",
+  "kanojo","maou","kami","yuusha","ou","otome",
+  "ga","wa","no","to","baka","chan","kun","sama",
+
+  // years
+  "2010","2011","2012","2013","2014","2015",
+  "2016","2017","2018","2019","2020","2021",
+  "2022","2023","2024","2025",
+
+  // popular anime
+  "naruto","one piece","bleach","dragon ball",
+  "attack on titan","death note","jujutsu kaisen",
+  "demon slayer","black clover","solo leveling",
+  "chainsaw man","pokemon","boruto","fairy tail",
+  "hunter x hunter","tokyo ghoul","haikyuu",
+  "blue lock","overlord","re zero","code geass",
+  "one punch","mob psycho"
+
+];
   let all = [];
 
   for(const key of keywords){
